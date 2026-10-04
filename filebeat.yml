@@ -1,0 +1,14 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/access.log
+
+# Полностью отключаем шаблоны и ILM, чтобы использовать наш простой индекс
+setup.template.enabled: false
+setup.ilm.enabled: false
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  # Простой формат имени индекса
+  index: "filebeat-nginx-%{+yyyy.MM.dd}"
